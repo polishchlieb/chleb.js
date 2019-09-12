@@ -14,7 +14,10 @@ export default class App extends Component {
                     node: 'input',
                     attributes: { type: 'text' },
                     events: [
-                        { name: 'input', callback: e => this.update(e) }
+                        {
+                            name: 'input',
+                            callback: e => this.update(e)
+                        }
                     ],
                     children: []
                 },

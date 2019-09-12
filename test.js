@@ -1,1 +1,0 @@
-var HTMLParser = require('fast-html-parser');
