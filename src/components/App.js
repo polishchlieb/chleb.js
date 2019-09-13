@@ -1,8 +1,13 @@
 import Component from '../lib/Component.js'
+import OkoNub from './Okonub.js';
 
 export default class App extends Component {
     data = {
         content: 'oko nub'
+    };
+
+    components = {
+        OkoNub
     };
 
     render() {
@@ -11,20 +16,34 @@ export default class App extends Component {
             attributes: { class: 'app' },
             children: [
                 {
-                    node: 'input',
-                    attributes: { type: 'text' },
-                    events: [
-                        {
-                            name: 'input',
-                            callback: e => this.update(e)
-                        }
-                    ],
-                    children: []
+                    node: 'div',
+                    children: [{
+                        node: 'input',
+                        attributes: { type: 'text' },
+                        events: [
+                            {
+                                name: 'input',
+                                callback: e => this.update(e)
+                            }
+                        ],
+                        children: []
+                    },
+                    {
+                        node: 'div',
+                        children: [
+                            this.content
+                        ]
+                    }]
                 },
                 {
                     node: 'div',
                     children: [
-                        this.content
+                        {
+                            node: 'OkoNub',
+                            attributes: {
+                                noobity: 'oko nub: 100%'
+                            }
+                        }
                     ]
                 }
             ]

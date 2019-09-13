@@ -1,4 +1,4 @@
-import { renderComponent } from './v-dom.js'
+import { renderComponent } from './vDom.js'
 
 export default class Component {
 	state = {};

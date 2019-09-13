@@ -1,4 +1,4 @@
-import { diff } from './v-dom.js';
+import { diff } from './vDom.js';
 
 export default class Bread {
     constructor({ app }) {
