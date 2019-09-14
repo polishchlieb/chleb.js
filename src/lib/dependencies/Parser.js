@@ -151,14 +151,9 @@ function lexer(string, getOne) {
 
 function addText(lastNode, text, addNode) {
     if (/\S/.test(text)) {
-        if (lastNode && /* lastNode.type === '#text' */ typeof lastNode === 'string') {
+        if (lastNode && typeof lastNode === 'string') {
             lastNode.text += text
         } else {
-            // lastNode = {
-            //     type: '#text',
-            //     node: text
-            //     // nodeValue: text
-            // }
             lastNode = text
             addNode(lastNode)
         }
@@ -277,7 +272,6 @@ function insertTbody(nodes) {
     }
 }
 
-
 function getCloseTag(string) {
     if (string.indexOf("</") === 0) {
         var match = string.match(/\<\/(\w+)>/)
@@ -299,7 +293,7 @@ function getOpenTag(string) {
         if (i === 0) {
             var l = string.indexOf('-->')
             if (l === -1) {
-                thow('注释节点没有闭合 ' + string.slice(0, 100))
+                throw('注释节点没有闭合 ' + string.slice(0, 100))
             }
             var node = {
                 type: '#comment',

@@ -3,14 +3,13 @@ import Component from '../lib/Component.js';
 import Parser from '../lib/dependencies/Parser.js';
 
 export default class OkoNub extends Component {
-    render() {
-        // return {
-        //     node: 'h1',
-        //     children: [
-        //         this.props.noobity
-        //     ]
-        // }
+    // data = {
+    //     works: this.props.works
+    // };
 
-        return Parser('<h1><OkoNub></OkoNub></h1>');
+    render() {
+        if(this.props.works)
+            return Parser('<div><h1>oko nub</h1></div>');
+        else return Parser('<div></div>');
     }
 }
