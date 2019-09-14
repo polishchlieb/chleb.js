@@ -72,11 +72,12 @@ function lexer(string, getOne) {
                 //1. option会自动移除元素节点，将它们的nodeValue组成新的文本节点
                 //2. table会将没有被thead, tbody, tfoot包起来的tr或文本节点，收集到一个新的tbody元素中
             if (node.type === 'option') {
-                node.children = [{
-                    type: '#text',
-                    node: getText(node)
-                    // ,nodeValue: getText(node)
-                }]
+                // node.children = [{
+                //     type: '#text',
+                //     node: getText(node)
+                //     // ,nodeValue: getText(node)
+                // }]
+                node.children = [getText(node)]
             } else if (node.type === 'table') {
                 insertTbody(node.children)
             }
@@ -150,14 +151,15 @@ function lexer(string, getOne) {
 
 function addText(lastNode, text, addNode) {
     if (/\S/.test(text)) {
-        if (lastNode && lastNode.type === '#text') {
+        if (lastNode && /* lastNode.type === '#text' */ typeof lastNode === 'string') {
             lastNode.text += text
         } else {
-            lastNode = {
-                type: '#text',
-                node: text
-                // nodeValue: text
-            }
+            // lastNode = {
+            //     type: '#text',
+            //     node: text
+            //     // nodeValue: text
+            // }
+            lastNode = text
             addNode(lastNode)
         }
     }
@@ -312,6 +314,7 @@ function getOpenTag(string) {
                 tag = match[1]
             var node = {
                 type: tag,
+                node: tag,
                 attributes: {},
                 children: []
             }
@@ -341,10 +344,11 @@ function getOpenTag(string) {
                 var j = string.indexOf(closeTag)
                 var nodeValue = string.slice(0, j)
                 leftContent += nodeValue + closeTag
-                node.children.push({
-                    type: '#text',
-                    nodeValue: nodeValue
-                })
+                // node.children.push({
+                //     type: '#text',
+                //     nodeValue: nodeValue
+                // })
+                node.children.push(nodeValue);
             }
 
             return [leftContent, node]
@@ -355,7 +359,7 @@ function getOpenTag(string) {
 function getText(node) {
     var ret = ''
     node.children.forEach(function(el) {
-        if (el.type === '#text') {
+        if (/*el.type === '#text'*/ typeof el === 'string') {
             ret += el.nodeValue
         } else if (el.children && !hiddenTag[el.type]) {
             ret += getText(el)

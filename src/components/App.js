@@ -39,7 +39,7 @@ export default class App extends Component {
                     node: 'div',
                     children: [
                         {
-                            node: 'OkoNub',
+                            node: OkoNub,
                             attributes: {
                                 noobity: 'oko nub: 100%'
                             }

@@ -1,15 +1,16 @@
 const renderNode = (vnode) => {
+	if (typeof vnode === 'string') return document.createTextNode(vnode);
+
 	let el;
 	const { node, attributes, children, events } = vnode;
-
-	if (vnode.split) return document.createTextNode(vnode);
+	
 
 	if (typeof node === 'string') {
 		el = document.createElement(node);
 
 		for (let key in attributes)
 			el.setAttribute(key, attributes[key]);
-  	} else if (typeof node === 'function') {
+	} else if (typeof node === 'function') {
     	const component = new node(attributes);
 
 		Object.keys(component.data).forEach(key => {
