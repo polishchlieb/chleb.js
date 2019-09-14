@@ -3,7 +3,7 @@ import OkoNub from './Okonub.js';
 
 export default class App extends Component {
     data = {
-        content: 'oko nub'
+        content: ''
     };
 
     components = {
@@ -41,7 +41,7 @@ export default class App extends Component {
                         {
                             node: OkoNub,
                             attributes: {
-                                noobity: 'oko nub: 100%'
+                                works: this.content.length > 0
                             }
                         }
                     ]
