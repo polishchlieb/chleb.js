@@ -3,12 +3,8 @@ import OkoNub from './Okonub.js';
 
 export default class App extends Component {
     data = {
-<<<<<<< HEAD
         color: 'white',
         text: ''
-=======
-        content: ''
->>>>>>> fa9ceecaf1dcf194501e9746248a6f97e32d3115
     };
 
     components = {
