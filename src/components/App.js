@@ -3,7 +3,8 @@ import OkoNub from './Okonub.js';
 
 export default class App extends Component {
     data = {
-        content: 'oko nub'
+        color: 'white',
+        text: ''
     };
 
     components = {
@@ -17,33 +18,27 @@ export default class App extends Component {
             children: [
                 {
                     node: 'div',
-                    children: [{
-                        node: 'input',
-                        attributes: { type: 'text' },
-                        events: [
-                            {
-                                name: 'input',
-                                callback: e => this.update(e)
-                            }
-                        ],
-                        children: []
-                    },
-                    {
-                        node: 'div',
-                        children: [
-                            this.content
-                        ]
-                    }]
-                },
-                {
-                    node: 'div',
                     children: [
                         {
-                            node: OkoNub,
-                            attributes: {
-                                noobity: 'oko nub: 100%'
+                            node: 'input',
+                            attributes: { type: 'text', test: this.color },
+                            events: [
+                                {
+                                    name: 'input',
+                                    callback: e => this.update(e)
+                                }
+                            ],
+                            children: [],
+                            style: {
+                                'background-color': this.color
                             }
                         }
+                    ]
+                },
+                {
+                    node: 'h1',
+                    children: [
+                        this.text
                     ]
                 }
             ]
@@ -51,6 +46,10 @@ export default class App extends Component {
     }
 
     update(e) {
-        this.content = e.target.value;
+        let { value } = e.target;
+        this.color = value;
+
+        if(value === 'oko nub') this.text = value
+        else this.text = ''
     }
 }

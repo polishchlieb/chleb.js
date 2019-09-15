@@ -2,8 +2,7 @@ const renderNode = (vnode) => {
 	if (typeof vnode === 'string') return document.createTextNode(vnode);
 
 	let el;
-	const { node, attributes, children, events } = vnode;
-	
+	const { node, attributes, children, events, style } = vnode;
 
 	if (typeof node === 'string') {
 		el = document.createElement(node);
@@ -35,10 +34,13 @@ const renderNode = (vnode) => {
 	// recursively do this to all of its children
 	(children || []).forEach(child => el.appendChild(renderNode(child)));
 
+	for(let key in style || {})
+		el.style[key] = style[key];
+
 	return el;
 }
 
-export const renderComponent = (component, parent) => {
+export const renderComponent = (component) => {
 	let rendered = component.render(component.props, component.state);
 	component.base = diff(component.base, rendered);
 }
@@ -65,7 +67,14 @@ export const diff = (dom, vnode, parent) => {
 			);
 
     	// run diffing for children
-    	dom.childNodes.forEach((child, i) => diff(child, vnode.children[i]));
+		dom.childNodes.forEach((child, i) => diff(child, vnode.children[i]));
+
+		let { attributes, style } = vnode;
+		for (let key in attributes)
+			dom.setAttribute(key, attributes[key]);
+
+		for(let key in style || {})
+			dom.style[key] = style[key];
 
     	return dom;
   	} else {
