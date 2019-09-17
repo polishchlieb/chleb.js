@@ -1,14 +1,8 @@
 import Component from '../lib/Component.js'
-import OkoNub from './Okonub.js';
 
 export default class App extends Component {
     data = {
-        color: 'white',
         text: ''
-    };
-
-    components = {
-        OkoNub
     };
 
     render() {
@@ -21,35 +15,26 @@ export default class App extends Component {
                     children: [
                         {
                             node: 'input',
-                            attributes: { type: 'text', test: this.color },
+                            attributes: { type: 'text' },
                             events: [
                                 {
                                     name: 'input',
                                     callback: e => this.update(e)
                                 }
                             ],
-                            children: [],
-                            style: {
-                                'background-color': this.color
-                            }
+                            children: []
                         }
                     ]
                 },
                 {
                     node: 'h1',
-                    children: [
-                        this.text
-                    ]
+                    children: [ this.text ]
                 }
             ]
         };
     }
 
     update(e) {
-        let { value } = e.target;
-        this.color = value;
-
-        if(value === 'oko nub') this.text = value
-        else this.text = ''
+        this.text = e.target.value;
     }
 }
