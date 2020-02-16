@@ -1,17 +1,17 @@
 export default class Store {
-    state: Object;
-    listeners: Array<Function> = [];
+    public state: Object;
+    private listeners: Array<Function> = [];
 
-    constructor(defaultState: Object = {}) {
+    public constructor(defaultState: Object = {}) {
         this.state = defaultState;
     }
 
-    setState(state: Object): void {
+    public setState(state: Object): void {
         Object.assign(this.state, state);
         this.listeners.forEach(func => func());
     }
 
-    subscribe(func: Function): void {
+    public subscribe(func: Function): void {
         this.listeners.push(func);
     }
 }

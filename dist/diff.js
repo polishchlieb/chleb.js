@@ -23,9 +23,6 @@ function diff($oldNode, old_vNode, new_vNode, $parent) {
     // previous condition returns, so we can have some kind of assumption
     old_vNode = old_vNode;
     if (new_vNode.type !== old_vNode.type) {
-        console.log(new_vNode);
-        console.log(new_vNode.type);
-        console.log(old_vNode.type);
         var $newNode = renderNode_1["default"](new_vNode);
         $parent.replaceChild($newNode, $oldNode);
         return $newNode;
@@ -37,15 +34,27 @@ function diff($oldNode, old_vNode, new_vNode, $parent) {
         var rendered = component.render();
         return diff($oldNode, component.vPrevious, rendered, $parent);
     }
-    var attributes = Object.assign(old_vNode.attributes, new_vNode.attributes);
+    var attributes = Object.assign({}, old_vNode.attributes, new_vNode.attributes);
     for (var attribute in attributes) {
-        if (attribute[0] === 'o' && attribute[1] === 'n')
+        if ((attribute[0] === 'o' && attribute[1] === 'n') || attribute === 'ref')
             continue;
-        if (attribute === 'ref')
+        var newValue = new_vNode.attributes[attribute];
+        var oldValue = old_vNode.attributes[attribute];
+        if (attribute === 'style') {
+            var changed = false;
+            var data = {};
+            for (var key in newValue)
+                if (newValue[key] !== oldValue[key]) {
+                    data[key] = newValue[key];
+                    if (!changed)
+                        changed = true;
+                }
+            if (changed)
+                Object.assign($oldNode.style, data);
             continue;
-        var value = attributes[attribute];
-        if (value !== old_vNode.attributes)
-            setAttribute_1["default"]($oldNode, attribute, value);
+        }
+        if (newValue !== oldValue)
+            setAttribute_1["default"]($oldNode, attribute, newValue);
     }
     for (var i in new_vNode.children) {
         diff($oldNode.childNodes[i], old_vNode.children[i], new_vNode.children[i], $oldNode);

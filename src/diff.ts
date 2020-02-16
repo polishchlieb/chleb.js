@@ -33,9 +33,6 @@ function diff(
     old_vNode = old_vNode as VNodeObject;
 
     if (new_vNode.type !== old_vNode.type) {
-        console.log(new_vNode);
-        console.log(new_vNode.type);
-        console.log(old_vNode.type);
         const $newNode = renderNode(new_vNode);
         $parent.replaceChild($newNode, $oldNode);
         return $newNode;
@@ -49,15 +46,31 @@ function diff(
         return diff($oldNode, component.vPrevious, rendered, $parent);
     }
 
-    const attributes = Object.assign(old_vNode.attributes, new_vNode.attributes);
+    const attributes = Object.assign({}, old_vNode.attributes, new_vNode.attributes);
     for (const attribute in attributes) {
-        if (attribute[0] === 'o' && attribute[1] === 'n')
+        if ((attribute[0] === 'o' && attribute[1] === 'n') || attribute === 'ref')
             continue;
-        if (attribute === 'ref')
+
+        const newValue = new_vNode.attributes[attribute];
+        const oldValue = old_vNode.attributes[attribute];
+        if (attribute === 'style') {
+            let changed = false;
+            const data = {};
+
+            for (const key in newValue)
+                if (newValue[key] !== oldValue[key]) {
+                    data[key] = newValue[key];
+                    if (!changed)
+                        changed = true;
+                }
+
+            if (changed)
+                Object.assign($oldNode.style, data);
             continue;
-        const value = attributes[attribute];
-        if (value !== old_vNode.attributes)
-            setAttribute($oldNode, attribute, value);
+        }
+        
+        if (newValue !== oldValue)
+            setAttribute($oldNode, attribute, newValue);
     }
 
     for (const i in new_vNode.children) {

@@ -28,6 +28,8 @@ function renderNode(vNode, component) {
             component && $node.addEventListener(attribute.substring(2), attributes[attribute].bind(component));
         else if (attribute === 'ref')
             attributes[attribute].current = $node;
+        else if (attribute === 'style')
+            Object.assign($node.style, attributes[attribute]);
         else
             setAttribute_1["default"]($node, attribute, attributes[attribute]);
     }

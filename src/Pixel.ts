@@ -7,15 +7,15 @@ interface Ref {
 }
 
 export default class Pixel {
-    static parse(type: string | typeof Component, attributes: Object, ...children: (VNodeObject | string)[]): VNodeObject {
+    public static parse(type: string | typeof Component, attributes: Object, ...children: (VNodeObject | string)[]): VNodeObject {
         return { type, attributes: attributes || {}, children };
     }
 
-    static render(vNode: VNodeObject | string, $parent: HTMLElement): void {
+    public static render(vNode: VNodeObject | string, $parent: HTMLElement): void {
         diff(null, null, vNode, $parent);
     }
 
-    static createRef(): Ref {
+    public static createRef(): Ref {
         return { current: null };
     }
 }

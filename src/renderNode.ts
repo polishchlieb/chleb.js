@@ -38,6 +38,8 @@ function renderNode(
             );
         else if (attribute === 'ref')
             attributes[attribute].current = $node;
+        else if (attribute === 'style')
+            Object.assign($node.style, attributes[attribute]);
         else
             setAttribute($node, attribute, attributes[attribute]);
     }
