@@ -2,25 +2,26 @@ import diff from './diff';
 import VNode from './VNode';
 
 export default class Component {
-    vPrevious: VNode;
-    $base: HTMLElement;
-    $parent: HTMLElement;
-    state: Object = {};
-    props: Object = {};
+    public vPrevious: VNode;
+    public $base: HTMLElement;
+    public $parent: HTMLElement;
+    private state: Object = {};
+    public props: Object = {};
 
-    willMount(): any {}
-    mounted(): any {}
+    public willMount(): any {}
+    public mounted(): any {}
+    public willUnmount(): any {}
 
-    render(): VNode {
+    public render(): VNode {
         throw new Error('render method not implemented');
     }
 
-    setState(state: Object): void {
+    protected setState(state: Object): void {
         Object.assign(this.state, state);
         this.renderComponent();
     }
 
-    renderComponent(): void {
+    protected renderComponent(): void {
         const vNode = this.render();
         this.$base = <HTMLElement>diff(this.$base, this.vPrevious, vNode, this.$parent);
     }

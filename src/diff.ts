@@ -6,13 +6,37 @@ function diff(
     $oldNode: HTMLElement,
     old_vNode: VNodeObject | string,
     new_vNode: VNodeObject | string,
-    $parent: HTMLElement
+    $parent: HTMLElement,
+    unmountedParent: boolean = false
 ): HTMLElement | Text {
     if (!$oldNode && new_vNode)
         return $parent.appendChild(renderNode(new_vNode));
 
     if (!new_vNode) {
-        $parent.removeChild($oldNode);
+        if (!unmountedParent)
+            $parent.removeChild($oldNode);
+
+        if ((<VNodeObject>old_vNode).component) {
+            (<VNodeObject>old_vNode).component.willUnmount();
+            const timer = setInterval(() => {
+                if (!$oldNode.parentNode) {
+                    const { component } = <VNodeObject>old_vNode;
+                    delete component.vPrevious;
+                    delete component.$base;
+                    delete component.$parent;
+                    clearInterval(timer);
+                }
+            });
+        } else if (typeof old_vNode === 'object') {
+            for (const i in old_vNode.children)
+                diff(
+                    <HTMLElement>$oldNode.childNodes[i],
+                    old_vNode.children[i],
+                    null,
+                    $oldNode,
+                    true
+                );
+        }
         return;
     }
 

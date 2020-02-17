@@ -16,21 +16,22 @@ declare module 'chleb' {
     }
 
     export class Component {
-        private state: { [k: string]: any };
+        protected state: { [k: string]: any };
         public props: { [k: string]: any };
 
         public willMount(): any;
         public mounted(): any;
         public render(): VNode;
 
-        private setState(state: { [k: string]: any }): void;
+        protected setState(state: { [k: string]: any }): void;
+        protected renderComponent(): void;
     }
 
     export class Store {
         public state: { [k: string]: any };
-        constructor(defaultState?: { [k: string]: any });
+        public constructor(defaultState?: { [k: string]: any });
 
-        setState(state: { [k: string]: any }): void;
-        subscribe(func: Function): void;
+        public setState(state: { [k: string]: any }): void;
+        public subscribe(func: Function): void;
     }
 }

@@ -8,6 +8,7 @@ var Component = /** @class */ (function () {
     }
     Component.prototype.willMount = function () { };
     Component.prototype.mounted = function () { };
+    Component.prototype.willUnmount = function () { };
     Component.prototype.render = function () {
         throw new Error('render method not implemented');
     };

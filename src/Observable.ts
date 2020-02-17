@@ -1,19 +1,15 @@
 export default class Observable {
-    observers: Array<Function> = [];
+    private observers: Array<Function> = [];
 
-    subscribe(f: Function): void {
+    public subscribe(f: Function): void {
         this.observers.push(f);
     }
 
-    unsubscribe(f: Function): void {
+    public unsubscribe(f: Function): void {
         this.observers = this.observers.filter(subscriber => subscriber !== f);
     }
 
-    notify(data: any): void {
+    public notify(data?: any): void {
         this.observers.forEach(observer => observer(data));
-    }
-
-    ping(): void {
-        this.observers.forEach(observer => observer());
     }
 }

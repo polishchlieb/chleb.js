@@ -2,11 +2,29 @@
 exports.__esModule = true;
 var renderNode_1 = require("./renderNode");
 var setAttribute_1 = require("./setAttribute");
-function diff($oldNode, old_vNode, new_vNode, $parent) {
+function diff($oldNode, old_vNode, new_vNode, $parent, unmountedParent) {
+    if (unmountedParent === void 0) { unmountedParent = false; }
     if (!$oldNode && new_vNode)
         return $parent.appendChild(renderNode_1["default"](new_vNode));
     if (!new_vNode) {
-        $parent.removeChild($oldNode);
+        if (!unmountedParent)
+            $parent.removeChild($oldNode);
+        if (old_vNode.component) {
+            old_vNode.component.willUnmount();
+            var timer_1 = setInterval(function () {
+                if (!$oldNode.parentNode) {
+                    var component = old_vNode.component;
+                    delete component.vPrevious;
+                    delete component.$base;
+                    delete component.$parent;
+                    clearInterval(timer_1);
+                }
+            });
+        }
+        else if (typeof old_vNode === 'object') {
+            for (var i in old_vNode.children)
+                diff($oldNode.childNodes[i], old_vNode.children[i], null, $oldNode, true);
+        }
         return;
     }
     if (typeof old_vNode !== typeof new_vNode) {
