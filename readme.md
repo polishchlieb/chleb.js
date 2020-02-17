@@ -8,5 +8,4 @@ simple virtual dom implementation [xlɛp]
 - component's props and data
 
 ## how to use
-1. wait for a tutorial
-2. 
+check out [this tutorial](https://github.com/chlebjs/chlebjs-example)
