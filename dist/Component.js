@@ -17,8 +17,7 @@ var Component = /** @class */ (function () {
         this.renderComponent();
     };
     Component.prototype.renderComponent = function () {
-        var vNode = this.render();
-        this.$base = diff_1["default"](this.$base, this.vPrevious, vNode, this.$parent);
+        this.$base = diff_1["default"](this.$base, this.vPrevious, this.vPrevious = this.render(), this.$parent);
     };
     return Component;
 }());

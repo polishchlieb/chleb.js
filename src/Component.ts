@@ -22,7 +22,11 @@ export default class Component {
     }
 
     protected renderComponent(): void {
-        const vNode = this.render();
-        this.$base = <HTMLElement>diff(this.$base, this.vPrevious, vNode, this.$parent);
+        this.$base = <HTMLElement>diff(
+            this.$base,
+            this.vPrevious,
+            this.vPrevious = this.render(),
+            this.$parent
+        );
     }
 }

@@ -1,9 +1,11 @@
 {
   "name": "chleb",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "description": "simple virtual dom",
   "main": "dist/index.js",
-  "scripts": {},
+  "scripts": {
+    "_build": "tsc src/index.ts --lib es2019,dom --outDir dist"
+  },
   "keywords": [
     "virtual",
     "dom",

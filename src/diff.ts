@@ -66,8 +66,12 @@ function diff(
         new_vNode.component = old_vNode.component;
         const { component } = new_vNode;
         component.props = new_vNode.attributes;
-        const rendered = component.render();
-        return diff($oldNode, component.vPrevious, rendered, $parent);
+        return diff(
+            $oldNode,
+            component.vPrevious,
+            component.vPrevious = component.render(),
+            $parent
+        );
     }
 
     const attributes = Object.assign({}, old_vNode.attributes, new_vNode.attributes);

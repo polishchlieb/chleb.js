@@ -49,8 +49,7 @@ function diff($oldNode, old_vNode, new_vNode, $parent, unmountedParent) {
         new_vNode.component = old_vNode.component;
         var component = new_vNode.component;
         component.props = new_vNode.attributes;
-        var rendered = component.render();
-        return diff($oldNode, component.vPrevious, rendered, $parent);
+        return diff($oldNode, component.vPrevious, component.vPrevious = component.render(), $parent);
     }
     var attributes = Object.assign({}, old_vNode.attributes, new_vNode.attributes);
     for (var attribute in attributes) {
