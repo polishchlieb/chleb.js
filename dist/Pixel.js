@@ -9,7 +9,11 @@ var Pixel = /** @class */ (function () {
         for (var _i = 2; _i < arguments.length; _i++) {
             children[_i - 2] = arguments[_i];
         }
-        return { type: type, attributes: attributes || {}, children: children };
+        return {
+            type: type,
+            attributes: attributes || {},
+            children: children.flat(Infinity)
+        };
     };
     Pixel.render = function (vNode, $parent) {
         diff_1["default"](null, null, vNode, $parent);
