@@ -2,10 +2,11 @@
 simple virtual dom implementation [xlɛp]
 
 ## current features
-- components
+- function components
 - basic diffing algorithm
 - jsx support
 - component's props and data
 
 ## how to use
-check out [this example](https://github.com/chlebjs/chlebjs-example)
+~~check out [this example](https://github.com/chlebjs/chlebjs-example)~~
+not at all, preferably
