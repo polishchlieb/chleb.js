@@ -1,6 +1,6 @@
 {
   "name": "chleb",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "simple virtual dom",
   "main": "src/index.js",
   "scripts": {},

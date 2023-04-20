@@ -100,7 +100,11 @@ function diff(
       $oldNode.setAttribute(attribute, newValue);
   }
 
-  for (const i in new_vNode.children) {
+  const childrenCount = Math.max(
+    old_vNode.children.length,
+    new_vNode.children.length
+  );
+  for (let i = 0; i < childrenCount; ++i) {
     diff(
       $oldNode.childNodes[i],
       old_vNode.children[i],
